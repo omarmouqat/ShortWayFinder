@@ -102,12 +102,19 @@ const VisNetwork = forwardRef(({cancelEditModeFunct,
             if(senderRef.current!==-1) {
               nodes.update({id: senderRef.current, color: default_color});
             }
+            if(receiverRef.current===params.nodes[0]) {
+              setReceiver(-1);
+            }
+
             setSender(params.nodes[0]);
             nodes.update({id: params.nodes[0], color: sender_color, active: true});
           }
           else if (modeRef.current===4) {
             if(receiverRef.current!==-1) {
               nodes.update({id: receiverRef.current, color: default_color});
+            }
+            if(senderRef.current===params.nodes[0]) {
+              setSender(-1);
             }
             setReceiver(params.nodes[0]);
             nodes.update({id: params.nodes[0], color: receiver_color ,active: true});

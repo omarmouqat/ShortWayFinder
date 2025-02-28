@@ -117,9 +117,12 @@ function App() {
   };
   useEffect(() => {
     console.log('the new sender is : ', sender);
+    console.log('sender : ', sender," receiver : ", receiver);
   }, [sender]);
   useEffect(() => {
     console.log('the new receiver is : ', receiver);
+    console.log('sender : ', sender," receiver : ", receiver);
+
   }, [receiver]);
 
   useEffect(() => {
