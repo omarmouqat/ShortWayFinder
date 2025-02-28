@@ -21,7 +21,7 @@ const VisNetwork = forwardRef(({cancelEditModeFunct,
   const modeRef = useRef(null);
   const senderRef = useRef(null);
   const receiverRef = useRef(null);
-
+  const visNetworkRef = useRef(null);
  
   //default coloe for the nodes
   const default_color = '#97c2fc';
@@ -39,6 +39,13 @@ const VisNetwork = forwardRef(({cancelEditModeFunct,
     get_matrix, // Expose the function
     bellmanFord,
     getShortestPath,
+    clearNodes,
+    clearEdges,
+    setNodes,
+    setEdges,
+    getNodes,
+    getEdges,
+    redrawVisNetwork,
   }));
 
   useEffect(() => {
@@ -63,6 +70,7 @@ const VisNetwork = forwardRef(({cancelEditModeFunct,
     const data = { nodes, edges };
     
     const network = new Network(container, data, options);
+    visNetworkRef.current = network;
     network.on("click", function (params) {
         setMode(0);
         cancelEditModeFunct();
@@ -113,8 +121,40 @@ const VisNetwork = forwardRef(({cancelEditModeFunct,
         }
       
       });
+    
+    
   }, []);
 
+  const clearNodes = () => {
+    nodesRef.current.clear();
+  }
+  const clearEdges = () => {
+    edgesRef.current.clear();
+  } 
+  const setNodes = (nodes) => {
+    clearNodes();
+    nodes.forEach(node => {
+      nodesRef.current.add(node);
+    });
+  };
+  const setEdges = (edges) => {
+    clearEdges();
+    edges.forEach(edge => {
+      edgesRef.current.add(edge);
+    });
+  };
+  const getNodes = () => {
+    return nodesRef.current.get();
+  };
+  const getEdges = () => {
+    return edgesRef.current.get();
+  };
+  const redrawVisNetwork = async () => {
+    await new Promise(resolve => setTimeout(resolve, 500));
+    console.log("redraw");
+    visNetworkRef.current.redraw();
+    visNetworkRef.current.fit();
+  };
   // Function to generate and display the adjacency matrix
   function get_matrix() {
     // Get only active nodes
@@ -186,14 +226,14 @@ const VisNetwork = forwardRef(({cancelEditModeFunct,
 }
 
 // Function to retrieve the shortest path from source to destination
-function getShortestPath(prev, destination) {
-    let path = [];
-    for (let at = destination; at !== null; at = prev[at]) {
-        path.push(at);
-    }
-    path.reverse(); // Reverse the path to get the correct order
-    return path;
-}
+  function getShortestPath(prev, destination) {
+      let path = [];
+      for (let at = destination; at !== null; at = prev[at]) {
+          path.push(at);
+      }
+      path.reverse(); // Reverse the path to get the correct order
+      return path;
+  }
 
 
 
