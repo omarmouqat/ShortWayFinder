@@ -217,15 +217,15 @@ function App() {
     }
   };    
   return (
-  <div className='w-screen h-dvh bg-gray-800'> 
-    <header className='flex-1 h-1/10 w-full bg-sky-500 flex flex-row items-center justify-center'>
+  <div className='flex flex-col w-screen h-dvh bg-gray-800'> 
+    <header className='h-auto min-h-13 w-full bg-sky-500 flex flex-row items-center justify-center'>
       {/* <div id="role_controls_buttons" className='flex flex-row justify-around items-center w-full h-full'>
         <button onClick={() => changeMode(1)} id="enable_btn" className={` ${mode===1 ? "bg-green-300" : "bg-sky-200"} rounded-lg relative h-5/10 w-20 before:absolute before:top-0 before:-left-10 before:w-7.5 before:h-7.5 before:bg-[#38a4bd] before:rounded-full before:mr-1.25`}>Enable</button>
         <button onClick={() => changeMode(2)} id="disable_btn" className={` ${mode===2 ? "bg-green-300" : "bg-sky-200"} rounded-lg relative h-5/10 w-20 before:absolute before:top-0 before:-left-10 before:w-7.5 before:h-7.5 before:bg-[#ff5b5b] before:rounded-full before:mr-1.25`}>Disable</button>
         <button onClick={() => changeMode(3)} id="sender_btn" className={` ${mode===3 ? "bg-green-300" : "bg-sky-200"} rounded-lg relative h-5/10 w-20 before:absolute before:top-0 before:-left-10 before:w-7.5 before:h-7.5 before:bg-[#4ee66d] before:rounded-full before:mr-1.25`}>Sender</button>
         <button onClick={() => changeMode(4)} id="receiver_btn" className={` ${mode===4 ? "bg-green-300" : "bg-sky-200"} rounded-lg relative h-5/10 w-20 before:absolute before:top-0 before:-left-10 before:w-7.5 before:h-7.5 before:bg-[#faae46] before:rounded-full before:mr-1.25`}>Receiver</button>
       </div> */}
-      <div id="role_controls_buttons" className='w-9/10 sm:w-3/10 flex flex-row flex-wrap justify-around items-center h-1/2 border-x-1 border-gray-300 my-10 transition-all duration-600'>
+      <div id="role_controls_buttons" className='py-10 my-10 w-9/10 sm:w-3/10 flex flex-row flex-wrap justify-around items-center h-auto border-x-1 border-gray-300 my-10 transition-all duration-600'>
         <button data-tooltip-id='tooltip' data-tooltip-content="Enable Node" onClick={() => changeMode(1)} id="enable_btn" ><CircleCheck /></button>
         <button data-tooltip-id='tooltip' data-tooltip-content="Disable Node" onClick={() => changeMode(2)} id="disable_btn" ><CircleX /></button>
         <button data-tooltip-id='tooltip' data-tooltip-content="Set Sender" onClick={() => changeMode(3)} id="sender_btn" ><HardDriveUpload /></button>
@@ -234,7 +234,7 @@ function App() {
       </div>
     
     </header>
-    <div className='h-9/10 w-full flex flex-row items-center justify-center text-black'>
+    <div className=' flex-1 h-full w-full flex flex-row items-center justify-center text-black'>
       <div className='relative flex-3 bg-gray-50 flex flex-col w-full h-full text-black overflow-hidden'>
         <VisNetwork
         ref={visNetworkRef}
