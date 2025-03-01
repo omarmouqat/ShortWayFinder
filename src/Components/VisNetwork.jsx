@@ -50,17 +50,17 @@ const VisNetwork = forwardRef(({cancelEditModeFunct,
 
   useEffect(() => {
     var nodes = new DataSet([
-      {id: 1, label: 'Node 1',active: true, color: default_color},
-      {id: 2, label: 'Node 2',active: true, color: default_color},
-      {id: 3, label: 'Node 3',active: true, color: default_color},
-      {id: 5, label: 'Node 5',active: true, color: default_color},
+      {id: "1", label: 'Node 1',active: true, color: default_color},
+      {id: "2", label: 'Node 2',active: true, color: default_color},
+      {id: "3", label: 'Node 3',active: true, color: default_color},
+      {id: "5", label: 'Node 5',active: true, color: default_color},
     ]);
 
     // create an array with edges
     var edges = new DataSet([
-      {from: 1, to: 3, label: '14'},
-      {from: 3, to: 2, label: '5'},
-      {from: 2, to: 5, label: '-4'},
+      {from: "1", to: "3", label: '14'},
+      {from: "3", to: "2", label: '5'},
+      {from: "2", to: "5", label: '-4'},
     ]);
 
     nodesRef.current = nodes;
