@@ -4,8 +4,8 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import VisNetwork from './Components/VisNetwork'
 import { Network, DataSet } from "vis-network/standalone";
-import { ArrowBigLeft, ArrowBigRight} from 'lucide-react';
-
+import { ArrowBigLeft, ArrowBigRight,HardDriveDownload,HardDriveUpload,CircleX,CircleCheck} from 'lucide-react';
+import { Tooltip } from "react-tooltip";
 
 
 function App() {
@@ -218,13 +218,21 @@ function App() {
   };    
   return (
   <div className='w-screen h-screen bg-gray-800'> 
-    <header className='flex-1 h-1/10 w-full bg-gray-300'>
-    <div id="role_controls_buttons" className='flex flex-row justify-around items-center w-full h-full'>
-      <button onClick={() => changeMode(1)} id="enable_btn" className={` ${mode===1 ? "bg-green-300" : "bg-sky-200"} rounded-lg relative h-5/10 w-20 before:absolute before:top-0 before:-left-10 before:w-7.5 before:h-7.5 before:bg-[#38a4bd] before:rounded-full before:mr-1.25`}>Enable</button>
-      <button onClick={() => changeMode(2)} id="disable_btn" className={` ${mode===2 ? "bg-green-300" : "bg-sky-200"} rounded-lg relative h-5/10 w-20 before:absolute before:top-0 before:-left-10 before:w-7.5 before:h-7.5 before:bg-[#ff5b5b] before:rounded-full before:mr-1.25`}>Disable</button>
-      <button onClick={() => changeMode(3)} id="sender_btn" className={` ${mode===3 ? "bg-green-300" : "bg-sky-200"} rounded-lg relative h-5/10 w-20 before:absolute before:top-0 before:-left-10 before:w-7.5 before:h-7.5 before:bg-[#4ee66d] before:rounded-full before:mr-1.25`}>Sender</button>
-      <button onClick={() => changeMode(4)} id="receiver_btn" className={` ${mode===4 ? "bg-green-300" : "bg-sky-200"} rounded-lg relative h-5/10 w-20 before:absolute before:top-0 before:-left-10 before:w-7.5 before:h-7.5 before:bg-[#faae46] before:rounded-full before:mr-1.25`}>Receiver</button>
-    </div>
+    <header className='flex-1 h-1/10 w-full bg-sky-500 flex flex-row items-center justify-center'>
+      {/* <div id="role_controls_buttons" className='flex flex-row justify-around items-center w-full h-full'>
+        <button onClick={() => changeMode(1)} id="enable_btn" className={` ${mode===1 ? "bg-green-300" : "bg-sky-200"} rounded-lg relative h-5/10 w-20 before:absolute before:top-0 before:-left-10 before:w-7.5 before:h-7.5 before:bg-[#38a4bd] before:rounded-full before:mr-1.25`}>Enable</button>
+        <button onClick={() => changeMode(2)} id="disable_btn" className={` ${mode===2 ? "bg-green-300" : "bg-sky-200"} rounded-lg relative h-5/10 w-20 before:absolute before:top-0 before:-left-10 before:w-7.5 before:h-7.5 before:bg-[#ff5b5b] before:rounded-full before:mr-1.25`}>Disable</button>
+        <button onClick={() => changeMode(3)} id="sender_btn" className={` ${mode===3 ? "bg-green-300" : "bg-sky-200"} rounded-lg relative h-5/10 w-20 before:absolute before:top-0 before:-left-10 before:w-7.5 before:h-7.5 before:bg-[#4ee66d] before:rounded-full before:mr-1.25`}>Sender</button>
+        <button onClick={() => changeMode(4)} id="receiver_btn" className={` ${mode===4 ? "bg-green-300" : "bg-sky-200"} rounded-lg relative h-5/10 w-20 before:absolute before:top-0 before:-left-10 before:w-7.5 before:h-7.5 before:bg-[#faae46] before:rounded-full before:mr-1.25`}>Receiver</button>
+      </div> */}
+      <div id="role_controls_buttons" className='w-9/10 sm:w-3/10 flex flex-row flex-wrap justify-around items-center h-1/2 border-x-1 border-gray-300 my-10 transition-all duration-600'>
+        <button data-tooltip-id='tooltip' data-tooltip-content="Enable Node" onClick={() => changeMode(1)} id="enable_btn" ><CircleCheck /></button>
+        <button data-tooltip-id='tooltip' data-tooltip-content="Disable Node" onClick={() => changeMode(2)} id="disable_btn" ><CircleX /></button>
+        <button data-tooltip-id='tooltip' data-tooltip-content="Set Sender" onClick={() => changeMode(3)} id="sender_btn" ><HardDriveUpload /></button>
+        <button data-tooltip-id='tooltip' data-tooltip-content="Set Receiver" onClick={() => changeMode(4)} id="receiver_btn" ><HardDriveDownload /></button>
+        
+      </div>
+    
     </header>
     <div className='h-9/10 w-full flex flex-row items-center justify-center text-black'>
       <div className='relative flex-3 bg-gray-50 flex flex-col w-full h-full text-black overflow-hidden'>
@@ -255,9 +263,9 @@ function App() {
         </div>
         <button className='absolute right-2 top-1/2 hover:bg-sky-600 rounded-full text-black transition-all duration-600' onClick={() => setShowSideBar(showSideBar * -1)}>{showSideBar!==1 ? <ArrowBigLeft color="#000000" size={iconSize} style={{margin:"10px"}}/> : <ArrowBigRight color="#000000" size={iconSize} style={{margin:"10px"}}/>}</button>
       </div>
-      <div id='sidebar' className={`${showSideBar === 1 ? 'flex-1  w-full ' : 'flex-0 w-0'} h-full bg-sky-500 transition-all duration-500 overflow-hidden`}>
+      <div id='sidebar' className={`${showSideBar === 1 ? 'flex-10 sm:flex-2 md:flex-1 w-full  ' : 'flex-0 w-0'} h-full bg-sky-500 transition-all duration-500 overflow-hidden`}>
         <div className='h-45/100 w-full bg-gray-500 flex flex-row items-center justify-center'>
-          <button className='h-15/100 w-4/10 bg-sky-600 rounded-lg text-white text-nowrap overflow-hidden' onClick={handleShowMatrix}>show Matrix</button>
+          <button className='text:black h-15/100 w-4/10 bg-sky-600 rounded-lg text-white text-nowrap overflow-hidden' onClick={handleShowMatrix}>show Matrix</button>
         </div>
         <div className='h-45/100 w-full bg-gray-200'>
           <VisNetwork ref={outputVisNetworkRef} options={outputNetworkOptions}/>
@@ -269,6 +277,7 @@ function App() {
         
       </div>
     </div>
+    <Tooltip id='tooltip' effect='solid' place='bottom' type='dark' />
   </div>
     
   )
