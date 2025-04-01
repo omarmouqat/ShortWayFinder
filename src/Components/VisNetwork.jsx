@@ -13,6 +13,7 @@ const VisNetwork = forwardRef(({cancelEditModeFunct,
   receiver,
   setReceiver,
   options,
+  setGraphImg,
   },ref) => {
   
   const networkRef = useRef(null);
@@ -22,6 +23,7 @@ const VisNetwork = forwardRef(({cancelEditModeFunct,
   const senderRef = useRef(null);
   const receiverRef = useRef(null);
   const visNetworkRef = useRef(null);
+
  
   //default coloe for the nodes
   const default_color = '#97c2fc';
@@ -77,6 +79,7 @@ const VisNetwork = forwardRef(({cancelEditModeFunct,
         if (params.nodes.length > 0) {
           if (modeRef.current===0){
             console.log(mode);
+            console.log("params.nodes"+params.nodes);	
             enableNodeNameEditModeFunct(params.nodes[0],nodes.get(params.nodes[0]).label);
             // showSideBarfunc("heloooo");
           }
@@ -127,6 +130,10 @@ const VisNetwork = forwardRef(({cancelEditModeFunct,
           }
         }
       
+      });
+      network.on("afterDrawing", function(ctx) {
+        var dataURL = ctx.canvas.toDataURL();
+        setGraphImg(dataURL);
       });
     
     
@@ -193,7 +200,7 @@ const VisNetwork = forwardRef(({cancelEditModeFunct,
     let dist = Array(numNodes).fill(Infinity); // Distance array
     let prev = Array(numNodes).fill(null); // To store the shortest path
     dist[source] = 0; // Distance to source is zero
-
+    
     // Relax all edges (numNodes - 1) times
     for (let i = 0; i < numNodes - 1; i++) {
         for (let u = 0; u < numNodes; u++) {
@@ -270,7 +277,7 @@ const VisNetwork = forwardRef(({cancelEditModeFunct,
     receiverRef.current = receiver; // Update modeRef whenever mode changes
   }, [receiver]);
 
-  return <div className="w-full h-full" ref={networkRef}  />;
+  return <div id="mainvis" className="w-full h-full" ref={networkRef}  />;
 });
 
 export default VisNetwork;

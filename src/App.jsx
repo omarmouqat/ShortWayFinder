@@ -24,6 +24,10 @@ function App() {
   const visNetworkRef = useRef();
   const outputVisNetworkRef = useRef();
   const iconSize = 30;
+  const [mainGraphImg, setMainGraphImg] = useState(null);
+  const [shortWayGraphImg, setShortWayGraphImg] = useState(null);
+  
+
   //default coloe for the nodes
   const default_color = '#97c2fc';
   var nodes = new DataSet([
@@ -53,8 +57,10 @@ function App() {
   }
   
   const updateNodeNameFunct = () => {
-    const node_id = parseInt(nodeIdInput.current.value);
+    const node_id = nodeIdInput.current.value;
     const node_name = nodeNameInput.current.value;
+    
+    console.log("updateNodeNameEditModeFunct nodeid : "+node_id);
     setNodePropertyToChange({id: node_id, label : node_name});
     nodeIdInput.current.value = '';
     nodeNameInput.current.value = '';
@@ -74,6 +80,10 @@ function App() {
   };
 
   const handleShowMatrix = () => {
+    if (sender===-1 || receiver===-1) {
+      console.log("Please select sender and receiver nodes.");
+      return;
+    }
     if (visNetworkRef.current) {
        // Calling the function
       // Run Bellman-Ford to find shortest path and detect negative cycles
@@ -250,6 +260,7 @@ function App() {
         setSender={setSender}
         setReceiver={setReceiver}
         options={mainNetworkOptions}
+        setGraphImg={setMainGraphImg}
         />
         <div className={`absolute right-1/2 translate-x-1/2 h-14 w-3/10 bg-white flex rounded-xl flex flex-row items-center justify-center transition-all duration-600 overflow-hidden ${(editNodeNameMode || editEdgeLabelMode ) ? 'top-8/10' : 'top-3/2'}`}>
           <input ref={nodeNameInput} type="text" id="node_name_input" className={`flex-10 block w-full h-full rounded-l-md bg-white pl-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 ${editNodeNameMode ? "block" : "hidden"}`} placeholder='  Node Name :'/>
@@ -275,17 +286,25 @@ function App() {
 
         
       </div> */}
-      <div id='sidebar' className={`${showSideBar === 1 ? '-translate-x-1/1 ' : ''} top-0 left-full absolute w-3/10 h-full bg-sky-500 transition-all duration-500 `}>
-        <button className='absolute -left-10 top-1/4 hover:bg-sky-600 rounded-full text-black transition-all duration-600' onClick={() => setShowSideBar(showSideBar * -1)}>{showSideBar!==1 ? <ArrowBigLeft color="#000000" size={iconSize} style={{margin:"10px"}}/> : <ArrowBigRight color="#000000" size={iconSize} style={{margin:"10px"}}/>}</button>
-        
+      <div id='sidebar' className={`${showSideBar === 1 ? '-translate-x-1/1 ' : ''}sm:w-35/100 top-0 left-full absolute w-full  h-full bg-sky-500 transition-all duration-500 `}>
+        <button className='sm:hidden absolute left-4 top-4 hover:bg-sky-600 rounded-full text-black transition-all duration-600' onClick={() => setShowSideBar(showSideBar * -1)}>{showSideBar!==1 ? <ArrowBigLeft color="#000000" size={iconSize} style={{margin:"10px"}}/> : <ArrowBigRight color="#000000" size={iconSize} style={{margin:"10px"}}/>}</button>
+        <button className='absolute -left-15 top-4 hover:bg-sky-600 rounded-full text-black transition-all duration-600' onClick={() => setShowSideBar(showSideBar * -1)}>{showSideBar!==1 ? <ArrowBigLeft color="#000000" size={iconSize} style={{margin:"10px"}}/> : <ArrowBigRight color="#000000" size={iconSize} style={{margin:"10px"}}/>}</button>
+          
         <div className='h-45/100 w-full bg-gray-500 flex flex-row items-center justify-center'>
-          <button className='text:black h-15/100 w-4/10 bg-sky-600 rounded-lg text-white text-nowrap overflow-hidden' onClick={handleShowMatrix}>show Matrix</button>
+        <button className='text:black h-15/100 w-4/10 bg-sky-600 rounded-lg text-white text-nowrap overflow-hidden' >show Matrix</button>
+        <br />
+        <button className='text:black h-15/100 w-4/10 bg-sky-600 rounded-lg text-white text-nowrap overflow-hidden'><a id="graph_img" href={mainGraphImg} download>Download</a></button>
+        <br />
+        <button className='text:black h-15/100 w-4/10 bg-sky-600 rounded-lg text-white text-nowrap overflow-hidden' onClick={()=>{
+          visNetworkRef.current.clearNodes();
+          visNetworkRef.current.clearEdges();
+          }} >reset</button>
         </div>
         <div className='h-45/100 w-full bg-gray-200'>
-          <VisNetwork ref={outputVisNetworkRef} options={outputNetworkOptions}/>
+          <VisNetwork id="mainvis" ref={outputVisNetworkRef} options={outputNetworkOptions} setGraphImg={setShortWayGraphImg}/>
         </div>
         <div className='h-1/10 w-full bg-sky-800 flex flex-row items-center justify-center'>
-          <button onClick={() =>{}} className='h-3/4 w-4/10 bg-sky-600 rounded-lg text-white text-nowrap overflow-hidden'>Shortest Way</button>
+          <button className='h-3/4 w-4/10 bg-sky-600 rounded-lg text-white text-nowrap overflow-hidden' onClick={handleShowMatrix}>Shortest Way</button>
         </div>
 
         
