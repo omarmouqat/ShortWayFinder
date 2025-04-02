@@ -227,7 +227,7 @@ function App() {
     }
   };    
   return (
-  <div className='flex flex-col w-screen h-dvh bg-gray-800'> 
+  <div className='flex flex-col w-screen h-dvh bg-gray-800 overflow-hidden'> 
     <header className='flex-1 h-[10dvh] min-h-13 w-full bg-sky-500 flex flex-row items-center justify-center'>
       {/* <div id="role_controls_buttons" className='flex flex-row justify-around items-center w-full h-full'>
         <button onClick={() => changeMode(1)} id="enable_btn" className={` ${mode===1 ? "bg-green-300" : "bg-sky-200"} rounded-lg relative h-5/10 w-20 before:absolute before:top-0 before:-left-10 before:w-7.5 before:h-7.5 before:bg-[#38a4bd] before:rounded-full before:mr-1.25`}>Enable</button>
